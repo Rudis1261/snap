@@ -30,33 +30,36 @@ sudo chmod +x install.sh start.py
 ```
 
 ### Example output
->rudis1261@TheCracken:~/GitHub/snap$ ./start.py 
->Starting Snap
->Starting individual processes of PhantomJS to handle each breakpoint
->Queued Screenshot FOR: http://example.com , SIZE: 320
->Queued Screenshot FOR: http://example.com , SIZE: 480
->Queued Screenshot FOR: http://example.com , SIZE: 768
->Queued Screenshot FOR: http://example.com , SIZE: 992
->Queued Screenshot FOR: http://example.com , SIZE: 1200
->Queued Screenshot FOR: http://www.google.co.za , SIZE: 320
->Queued Screenshot FOR: http://www.google.co.za , SIZE: 480
->Queued Screenshot FOR: http://www.google.co.za , SIZE: 768
->Queued Screenshot FOR: http://www.google.co.za , SIZE: 992
->Queued Screenshot FOR: http://www.google.co.za , SIZE: 1200
->Queued, awaiting response
->rudis1261@TheCracken:~/GitHub/snap$ Rendered:  http://example.com 480w X720h
->Rendered:  http://example.com 320w X480h
->Rendered:  http://example.com 992w X793.6h
->Rendered:  http://example.com 1200w X960h
->Rendered:  http://example.com 768w X1152h
->Rendered:  http://www.google.co.za 480w X720h
->Rendered:  http://www.google.co.za 1200w X960h
->Rendered:  http://www.google.co.za 768w X1152h
->Rendered:  http://www.google.co.za 320w X480h
->Rendered:  http://www.google.co.za 992w X793.6h
+```shell
+rudis1261@TheCracken:~/GitHub/snap$ ./start.py 
+Starting Snap
+Starting individual processes of PhantomJS to handle each breakpoint
+Queued Screenshot FOR: http://example.com , SIZE: 320
+Queued Screenshot FOR: http://example.com , SIZE: 480
+Queued Screenshot FOR: http://example.com , SIZE: 768
+Queued Screenshot FOR: http://example.com , SIZE: 992
+Queued Screenshot FOR: http://example.com , SIZE: 1200
+Queued Screenshot FOR: http://www.google.co.za , SIZE: 320
+Queued Screenshot FOR: http://www.google.co.za , SIZE: 480
+Queued Screenshot FOR: http://www.google.co.za , SIZE: 768
+Queued Screenshot FOR: http://www.google.co.za , SIZE: 992
+Queued Screenshot FOR: http://www.google.co.za , SIZE: 1200
+Queued, awaiting response
+rudis1261@TheCracken:~/GitHub/snap$ Rendered:  http://example.com 480w X720h
+Rendered:  http://example.com 320w X480h
+Rendered:  http://example.com 992w X793.6h
+Rendered:  http://example.com 1200w X960h
+Rendered:  http://example.com 768w X1152h
+Rendered:  http://www.google.co.za 480w X720h
+Rendered:  http://www.google.co.za 1200w X960h
+Rendered:  http://www.google.co.za 768w X1152h
+Rendered:  http://www.google.co.za 320w X480h
+Rendered:  http://www.google.co.za 992w X793.6h
+```
 
 ## TODOS
 These are things I still need todo to consider this usable
-TODO: Document everything!
-TODO: Add a Python Web Service to serve the snapped images
-TODO: Create a web-interface to serve the images
+
+* Document everything!
+* Add a Python Web Service to serve the snapped images
+* Create a web-interface to serve the images
