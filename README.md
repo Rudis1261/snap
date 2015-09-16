@@ -29,21 +29,23 @@ sudo chmod +x install.sh start.py
 ./start.py
 ```
 
+And keep an eye on the screenshots folder for your newly created, crisp images.
+
 ### Example output
 ```shell
 rudis1261@TheCracken:~/GitHub/snap$ ./start.py 
 Starting Snap
 Starting individual processes of PhantomJS to handle each breakpoint
-Queued Screenshot FOR: http://example.com , SIZE: 320
-Queued Screenshot FOR: http://example.com , SIZE: 480
-Queued Screenshot FOR: http://example.com , SIZE: 768
-Queued Screenshot FOR: http://example.com , SIZE: 992
-Queued Screenshot FOR: http://example.com , SIZE: 1200
-Queued Screenshot FOR: http://www.google.co.za , SIZE: 320
-Queued Screenshot FOR: http://www.google.co.za , SIZE: 480
-Queued Screenshot FOR: http://www.google.co.za , SIZE: 768
-Queued Screenshot FOR: http://www.google.co.za , SIZE: 992
-Queued Screenshot FOR: http://www.google.co.za , SIZE: 1200
+Queued Screenshot FOR: http://example.com SIZE: 320
+Queued Screenshot FOR: http://example.com SIZE: 480
+Queued Screenshot FOR: http://example.com SIZE: 768
+Queued Screenshot FOR: http://example.com SIZE: 992
+Queued Screenshot FOR: http://example.com SIZE: 1200
+Queued Screenshot FOR: http://www.google.co.za SIZE: 320
+Queued Screenshot FOR: http://www.google.co.za SIZE: 480
+Queued Screenshot FOR: http://www.google.co.za SIZE: 768
+Queued Screenshot FOR: http://www.google.co.za SIZE: 992
+Queued Screenshot FOR: http://www.google.co.za SIZE: 1200
 Queued, awaiting response
 rudis1261@TheCracken:~/GitHub/snap$ Rendered:  http://example.com 480w X720h
 Rendered:  http://example.com 320w X480h

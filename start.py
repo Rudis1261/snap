@@ -27,7 +27,7 @@ screenShotPath = "screenshots"
 
 def generateShot(url, size):
     global startTime, screenShotPath
-    print "Queued Screenshot FOR:", url, ", SIZE:", size
+    print "Queued Screenshot FOR:", url, "SIZE:", size
     namedUrl = url.replace("http://", "")
     namedUrl = namedUrl.replace("https://", "")
     namedUrl = namedUrl.replace("/", "--")
