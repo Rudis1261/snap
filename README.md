@@ -7,7 +7,7 @@ I know there are applications out there which already do something like this, bu
 ## The Goal of this project
 * This is my take on this type of thing. 
 * Build multiple URLs, at multiple resolutions, at the same time. 
-* Then server the results in a easy to interpret way.
+* Then serve the results in a easy to interpret way.
 
 ## Prerequisites
 You will need to have **python** and **npm** (Node Package Manager) installed before you will be able to use this 

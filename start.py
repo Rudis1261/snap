@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-#import time
 import subprocess, time
 
 print "Starting Snap"
@@ -8,7 +7,7 @@ print "Starting individual processes of PhantomJS to handle each breakpoint"
 # List of test URLs
 urlToCheck = [
     'http://example.com',
-    'http://www.google.co.za'
+    'http://www.google.com',
 ]
 
 # The BS3 breakpoints I want to see + 320px (regarded as true min screen width)

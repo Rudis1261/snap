@@ -31,6 +31,6 @@ page.viewportSize = { width: breakPoint, height: breakPointHeight };
 //page.clipRect = { top: 0, left: 0, width: 1024, height: 768 };
 page.open(url, function() {
   page.render(outputPath);
-  console.log("Rendered: ", url, breakPoint+"w X"+breakPointHeight+"h");
+  console.log("Rendered: ", url, breakPoint+"w X "+breakPointHeight+"h");
   phantom.exit();
 });
