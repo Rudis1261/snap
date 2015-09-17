@@ -27,7 +27,7 @@ class CustomHandler(SimpleHTTPServer.SimpleHTTPRequestHandler):
 # Launch the server
 try:
     httpd = SocketServer.ThreadingTCPServer(('127.0.0.1', PORT),CustomHandler)
-    print 'Starting server on PORT:' + str(PORT) + ', use <Ctrl-C> to stop'
+    print '\n\nStarting server on PORT:' + str(PORT) + ', use <Ctrl-C> to stop\n\n'
     httpd.serve_forever()
 except KeyboardInterrupt:
     print " pressed. Closing server"
