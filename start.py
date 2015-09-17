@@ -54,7 +54,9 @@ def createConfiguration():
     os.mkdir(configurationPath, 0755);
     f = open(os.path.join(configurationPath, "config.json"),'w')
     f.write(json.dumps(configuration, indent=4, sort_keys=True))
-    exit()
+    
+    # Start the webserver
+    from serve import *
 
 def generateShot(url, width):
     global startTime, screenShotPath, configuration
