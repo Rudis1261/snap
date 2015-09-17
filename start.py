@@ -31,10 +31,10 @@ def generateShot(url, size):
     namedUrl = namedUrl.replace("https://", "")
     namedUrl = namedUrl.replace("/", "--")
     outputName = screenShotPath+"/"+str(startTime)+"/"+str(size)+"/"+namedUrl+".png"
-    
+
     process = subprocess.Popen([
-        'phantomjs', 
-        'render.js', 
+        'phantomjs',
+        'render.js',
         str(url),
         str(size),
         outputName
@@ -46,7 +46,7 @@ def shotQueue(currentBp=None, currentUrl=None):
     global breakPoints, urlToCheck
     start = breakPoints[0];
     end = breakPoints[-1];
-    
+
     # First iteration
     if currentBp is None and currentUrl is None:
         currentBp = start
@@ -61,7 +61,7 @@ def shotQueue(currentBp=None, currentUrl=None):
     # Still busy with Break Points for URL
     elif currentBp < end:
         currentBp = breakPoints[breakPoints.index(currentBp)+1]
-        
+
     # Done with current URL
     elif currentBp == end:
         currentBp = start
@@ -70,7 +70,7 @@ def shotQueue(currentBp=None, currentUrl=None):
 
     # Generate the Screenshot man
     generateShot(currentUrl, currentBp)
-    
+
     # Recurse back with the next iteration details
     return shotQueue(currentBp, currentUrl)
 
