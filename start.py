@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-import subprocess, time, sys, urllib, json
+import subprocess, time, sys, urllib, json, os
 
 print "Starting Snap"
 print "Starting individual processes of PhantomJS to handle each breakpoint"
@@ -41,9 +41,25 @@ breakPoints = [
 startTime = int(time.time())
 screenShotPath = "screenshots"
 
+# Populated as part of the application's running
+configuration = {
+    'startTime': startTime,
+    'rendered': {}
+}
+
+def createConfiguration():
+    global configuration
+    print "Generating configuration file (JSON)"
+    configurationPath = os.path.join(str(screenShotPath), str(startTime))
+    os.mkdir(configurationPath, 0755);
+    f = open(os.path.join(configurationPath, "config.json"),'w')
+    f.write(json.dumps(configuration, indent=4, sort_keys=True))
+    exit()
+
 def generateShot(url, width):
-    global startTime, screenShotPath
-    print "Queued Screenshot FOR:", url, "WIDTH:", width
+    global startTime, screenShotPath, configuration
+
+    # Build up the output name
     namedUrl = url.replace("http://", "")
     namedUrl = namedUrl.replace("https://", "")
     namedUrl = namedUrl.replace("/", "--")
@@ -54,15 +70,35 @@ def generateShot(url, width):
         'rbViewed' : "%7B%22rbViewed%22%3A%221%22%2C%22lastViewed%22%3A%20%221442385836270%22%2C%20%22threeDaysOrMore%22%3A%20%22false%22%7D"
     })
 
+    # Determine the device height from the width
+    # Portrait for smaller devices, landscape for larger devices
+    if width < 800:
+        height = int(width * 1.5)
+    else:
+        height = int(width * 0.8)
+
     # Command and params to be passed through
     command = [
         'phantomjs',
         'render.js',
         str(url),
         str(width),
+        str(height),
         outputName,
         cookies,
     ]
+
+    # Add the configuration for the individual screenshots
+    if configuration['rendered'].has_key(str(url)) == False:
+        configuration['rendered'][str(url)] = [];
+
+    configuration['rendered'][str(url)].append({
+        str(width): {
+            'width': width,
+            'height': height,
+            'src': outputName
+        }
+    });
 
     # Fire and Forget
     subprocess.Popen(command)
@@ -78,7 +114,9 @@ def generateShot(url, width):
     # except OSError as e:
     #     print >>sys.stderr, "Execution failed:", e
 
+    print "Queued Screenshot FOR:", url, "WIDTH:", width, "HEIGHT:", height
     return True
+
 
 def shotQueue(currentBp=None, currentUrl=None):
     global breakPoints, urlToCheck
@@ -94,7 +132,7 @@ def shotQueue(currentBp=None, currentUrl=None):
     # Prevent out of bound recursion. Exit when done - THE END
     elif len(urlToCheck) == 0 and currentBp == end:
         print "Queued, awaiting response"
-        exit()
+        createConfiguration()
 
     # Still busy with Break Points for URL
     elif currentBp < end:
