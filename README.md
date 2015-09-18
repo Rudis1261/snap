@@ -21,12 +21,10 @@ sudo chmod +x install.sh start.py
 ```
 
 ## USAGE:
-* Open start.py in your favorite text editor.
-* Find the variable "urlToCheck" and change it to the urls you want screenshots of
-* Run the script, and wait for the output
+* Run the script with the URL's you want to test, separated by spaces
 
 ```shell
-./start.py
+./start.py http://www.example.com http://www.google.com
 ```
 
 And keep an eye on the screenshots folder for your newly created, crisp images.
@@ -60,8 +58,7 @@ Rendered:  http://www.google.co.za 992w X793.6h
 ```
 
 ## TODOS
-These are things I still need todo to consider this usable
+These are things I still need TODO to consider this usable
 
-* Document everything!
-* Add a Python Web Service to serve the snapped images
-* Create a web-interface to serve the images
+* Document everything! - Maybe never :-D
+* Create a web-interface to serve the images - In Progress
