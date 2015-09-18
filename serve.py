@@ -24,12 +24,12 @@ class CustomHandler(SimpleHTTPServer.SimpleHTTPRequestHandler):
         else:
             SimpleHTTPServer.SimpleHTTPRequestHandler.do_GET(self) #dir listing
 
-# Launch the server
-try:
-    httpd = SocketServer.ThreadingTCPServer(('127.0.0.1', PORT),CustomHandler)
-    print '\n\nStarting server on PORT:' + str(PORT) + ', use <Ctrl-C> to stop\n\n'
-    httpd.serve_forever()
-except KeyboardInterrupt:
-    print " pressed. Closing server"
-    httpd.shutdown()
-    exit()
+def StartServer():
+    try:
+        httpd = SocketServer.ThreadingTCPServer(('127.0.0.1', PORT),CustomHandler)
+        print '\n\nStarting server on PORT:' + str(PORT) + ', use <Ctrl-C> to stop\n\n'
+        httpd.serve_forever()
+    except KeyboardInterrupt:
+        print " pressed. Shutting down server, please wait..."
+        httpd.shutdown()
+        exit()

@@ -1,18 +1,15 @@
 #!/usr/bin/env python
 import subprocess, time, sys, urllib, json, os
+from serve import *
 
 print "Starting Snap"
 print "Starting individual processes of PhantomJS to handle each breakpoint"
 
-# List of test URLs
-urlToCheck = [
-    'http://example.com',
-    'http://www.google.com',
-]
+# List of test URLs, provided as arguments
+urlToCheck = []
 
 # Allow the url's to be provided via arguments to the call
 if len(sys.argv) > 1:
-    urlToCheck = []
     sys.argv.pop(0)
     for arg in sys.argv:
         try:
@@ -47,16 +44,18 @@ configuration = {
     'rendered': {}
 }
 
+
 def createConfiguration():
     global configuration
     print "Generating configuration file (JSON)"
     configurationPath = os.path.join(str(screenShotPath), str(startTime))
     os.mkdir(configurationPath, 0755);
     f = open(os.path.join(configurationPath, "config.json"),'w')
-    f.write(json.dumps(configuration, indent=4, sort_keys=True))
-    
+    f.write(json.dumps(configuration, indent=2, sort_keys=True))
+
     # Start the webserver
-    from serve import *
+    StartServer()
+
 
 def generateShot(url, width):
     global startTime, screenShotPath, configuration
