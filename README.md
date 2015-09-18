@@ -24,7 +24,7 @@ sudo chmod +x install.sh start.py
 * Run the script with the URL's you want to test, separated by spaces
 
 ```shell
-./start.py http://www.example.com http://www.google.com
+./start.py http://www.google.com http://www.example.com
 ```
 
 And keep an eye on the screenshots folder for your newly created, crisp images.
