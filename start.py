@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-import subprocess, time, sys, urllib, json, os
+import subprocess, time, sys, urllib, json, os, shutil
 from serve import *
 
 print "Starting Snap"
@@ -37,6 +37,8 @@ breakPoints = [
 # Other variables for this to work
 startTime = int(time.time())
 screenShotPath = "screenshots"
+abspath = os.path.abspath(__file__)
+pwd = os.path.dirname(abspath)
 
 # JSON configuration, needed for Angular
 configuration = {
@@ -47,13 +49,15 @@ configuration = {
 def updateLinks():
     global screenShotPath, startTime
     configurationPath = os.path.join(str(screenShotPath), str(startTime))
-    source = open(os.path.join(screenShotPath, "links.json"),'r+')
-    getLinks = source.read()
-    source.close()
     links = {}
-
-    if len(getLinks) > 0:
-        links = json.loads(getLinks)
+    
+    # If the links exist, try and read it
+    if os.path.exists(os.path.join(screenShotPath, "links.json")):
+        source = open(os.path.join(screenShotPath, "links.json"),'r+')
+        getLinks = source.read()
+        source.close()
+        if len(getLinks) > 0:
+            links = json.loads(getLinks)
 
     thisRun = {
         startTime: {
@@ -69,6 +73,14 @@ def updateLinks():
     return True
 
 
+def copyTemplate():
+    global screenShotPath, pwd
+    source = os.path.join(pwd, 'template.html')
+    destination = os.path.join(pwd, screenShotPath, 'index.html')
+    shutil.copyfile(source, destination)
+    return True
+
+
 def createConfiguration():
     global configuration, screenShotPath, startTime
     print "Generating configuration file (JSON)"
@@ -80,6 +92,9 @@ def createConfiguration():
 
     # Update the list of JSON links
     updateLinks()
+
+    # Copy the template into the screenshots folder
+    copyTemplate()
 
     # Start the webserver
     StartServer(PORT=5000)
