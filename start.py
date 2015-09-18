@@ -38,23 +38,51 @@ breakPoints = [
 startTime = int(time.time())
 screenShotPath = "screenshots"
 
-# Populated as part of the application's running
+# JSON configuration, needed for Angular
 configuration = {
     'startTime': startTime,
     'rendered': {}
 }
 
+def updateLinks():
+    global screenShotPath, startTime
+    configurationPath = os.path.join(str(screenShotPath), str(startTime))
+    source = open(os.path.join(screenShotPath, "links.json"),'r+')
+    getLinks = source.read()
+    source.close()
+    links = {}
+
+    if len(getLinks) > 0:
+        links = json.loads(getLinks)
+
+    thisRun = {
+        startTime: {
+            'label': startTime,
+            'link': configurationPath
+        }
+    }
+
+    links.update(thisRun)
+    destination = open(os.path.join(screenShotPath, "links.json"),'w')
+    json.dump(links, destination, indent=2, sort_keys=True)
+    destination.close()
+    return True
+
 
 def createConfiguration():
-    global configuration
+    global configuration, screenShotPath, startTime
     print "Generating configuration file (JSON)"
     configurationPath = os.path.join(str(screenShotPath), str(startTime))
     os.mkdir(configurationPath, 0755);
-    f = open(os.path.join(configurationPath, "config.json"),'w')
-    f.write(json.dumps(configuration, indent=2, sort_keys=True))
+    file = open(os.path.join(configurationPath, "config.json"),'w')
+    file.write(json.dumps(configuration, indent=2, sort_keys=True))
+    file.close()
+
+    # Update the list of JSON links
+    updateLinks()
 
     # Start the webserver
-    StartServer()
+    StartServer(PORT=5000)
 
 
 def generateShot(url, width):
@@ -102,7 +130,7 @@ def generateShot(url, width):
     });
 
     # Fire and Forget
-    subprocess.Popen(command)
+    #subprocess.Popen(command)
 
     # Synchronous Command
     # try:

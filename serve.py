@@ -5,7 +5,6 @@ from urlparse import urlparse, parse_qsl
 abspath = os.path.abspath(__file__)
 dname = os.path.dirname(abspath)
 os.chdir(dname)
-PORT = 5000
 
 # Start the SimpleHTTPServer up and look for actions, otherwise server the remote page
 class CustomHandler(SimpleHTTPServer.SimpleHTTPRequestHandler):
@@ -24,7 +23,7 @@ class CustomHandler(SimpleHTTPServer.SimpleHTTPRequestHandler):
         else:
             SimpleHTTPServer.SimpleHTTPRequestHandler.do_GET(self) #dir listing
 
-def StartServer():
+def StartServer(PORT=5000):
     try:
         httpd = SocketServer.ThreadingTCPServer(('127.0.0.1', PORT),CustomHandler)
         print '\n\nStarting server on PORT:' + str(PORT) + ', use <Ctrl-C> to stop\n\n'
