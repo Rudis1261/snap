@@ -50,7 +50,7 @@ def updateLinks():
     global screenShotPath, startTime
     configurationPath = os.path.join(str(screenShotPath), str(startTime))
     links = {}
-    
+
     # If the links exist, try and read it
     if os.path.exists(os.path.join(screenShotPath, "links.json")):
         source = open(os.path.join(screenShotPath, "links.json"),'r+')
@@ -62,7 +62,7 @@ def updateLinks():
     thisRun = {
         startTime: {
             'label': startTime,
-            'link': configurationPath
+            'href': configurationPath
         }
     }
 
@@ -75,6 +75,11 @@ def updateLinks():
 
 def copyTemplate():
     global screenShotPath, pwd
+
+    source = os.path.join(pwd, 'favicon.ico')
+    destination = os.path.join(pwd, screenShotPath, 'favicon.ico')
+    shutil.copyfile(source, destination)
+
     source = os.path.join(pwd, 'template.html')
     destination = os.path.join(pwd, screenShotPath, 'index.html')
     shutil.copyfile(source, destination)
@@ -97,6 +102,7 @@ def createConfiguration():
     copyTemplate()
 
     # Start the webserver
+    subprocess.call(['google-chrome', 'http://localhost:5000'])
     StartServer(PORT=5000)
 
 

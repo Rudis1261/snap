@@ -1,16 +1,16 @@
 # Snap *Linux
 
-#### Another screenshot application. 
+#### Another screenshot application.
 
-I know there are applications out there which already do something like this, but in the past when I have tried using those I found them cumbersome and often riddled with issues. 
+I know there are applications out there which already do something like this, but in the past when I have tried using those I found them cumbersome and often riddled with issues.
 
 ## The Goal of this project
-* This is my take on this type of thing. 
-* Build multiple URLs, at multiple resolutions, at the same time. 
+* This is my take on this type of thing.
+* Build multiple URLs, at multiple resolutions, at the same time.
 * Then serve the results in a easy to interpret way.
 
 ## Prerequisites
-You will need to have **python** and **npm** (Node Package Manager) installed before you will be able to use this 
+You will need to have **python** and **npm** (Node Package Manager) installed before you will be able to use this
 
 ## Installation:
 ```shell
@@ -31,7 +31,7 @@ And keep an eye on the screenshots folder for your newly created, crisp images.
 
 ### Example output
 ```shell
-rudis1261@TheCracken:~/GitHub/snap$ ./start.py 
+rudis1261@TheCracken:~/GitHub/snap$ ./start.py
 Starting Snap
 Starting individual processes of PhantomJS to handle each breakpoint
 Queued Screenshot FOR: http://example.com SIZE: 320

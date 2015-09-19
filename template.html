@@ -1,7 +1,8 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="snap">
 <head>
-    <title>Snap, OH Snap!</title>
+    <title>OH Snap!</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.6/angular.min.js"></script>
     <script
         type="text/javascript"
         src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"
@@ -17,107 +18,151 @@
         integrity="sha256-MfvZlkHCEqatNoGiOXveE8FIwMzZg4W85qfrfIFBfYc= sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ=="
         crossorigin="anonymous">
     <style type="text/css">
-        a,
-        a:focus,
-        a:hover {
-          color: #fff;
-        }
-        .btn-default,
-        .btn-default:hover,
-        .btn-default:focus {
-          color: #fff;
-          text-shadow: none;
-          background-color: #fff;
-          border: 2px solid #fff;
-          -webkit-border-radius: 0;
-          -moz-border-radius: 0;
-          border-radius: 0;
-          background: #000;
-        }
-        small { color: #fafafa!important; }
-        html,
-        body {
-          height: 100%;
-          background-color: #8494AD;
-        }
-        body {
-          color: #fff;
-          text-align: center;
-          text-shadow: 0 1px 3px rgba(0,0,0,.5);
-        }
-        .site-wrapper {
-          display: table;
-          width: 100%;
-          height: 100%; /* For at least Firefox */
-          min-height: 100%;
-          -webkit-box-shadow: inset 0 0 100px rgba(0,0,0,.5);
-                  box-shadow: inset 0 0 100px rgba(0,0,0,.5);
-        }
-        .site-wrapper-inner {
-          display: table-cell;
-          vertical-align: top;
-        }
-        .cover-container {
-          margin-right: auto;
-          margin-left: auto;
-        }
-        .lead { margin-bottom: 40px; }
-        .inner { padding: 15px; }
-        .cover { padding: 0 20px; }
-        .cover .btn-lg {
-          padding: 10px 20px;
-          font-weight: bold;
-        }
-        .mastfoot {
-          color: #999; /* IE8 proofing */
-          color: rgba(255,255,255,.5);
-        }
-        @media (min-width: 768px) {
-          .mastfoot {
-            position: fixed;
-            bottom: 0;
-          }
-          .site-wrapper-inner {
-            vertical-align: middle;
-          }
-          .mastfoot,
-          .cover-container {
-            width: 100%;
-          }
-        }
-        @media (min-width: 992px) {
-          .mastfoot,
-          .cover-container {
-            width: 700px;
-          }
-        }
+      h4 {
+        color: #9C9C9C;
+        text-shadow: 1px 1px #fff;
+      }
+      a, a:active {
+        color: #333;
+      }
+      a:hover {
+        color: #666;
+        text-decoration: none;
+        text-shadow: 1px 1px #fff;
+      }
+      ul, li {
+        padding: 0;
+        margin: 0;
+        text-indent: 0px;
+        list-style: none;
+      }
+      * {
+        box-sizing: border-box;
+        font-size: 16px;
+      }
+      small {
+        color: #ccc!important;
+        font-size: 0.4em!important;
+      }
+      html,
+      body {
+        background-color: #B5B5B5;
+      }
+      .heading {
+        color: #fff;
+        padding:0;
+        margin: 0;
+        display: block;
+        text-align: center;
+        text-shadow: 0 1px 3px rgba(0,0,0,.5);
+        -webkit-box-shadow: inset 0 0 50px rgba(0,0,0,.3);
+        box-shadow: inset 0 0 50px rgba(0,0,0,.3);
+      }
+      .content {
+        background: #fff;
+        width: 100%;
+        display: block;
+        min-height: 100%;
+        margin: 0;
+        padding: 0;
+        border-top: 2px solid #828282;
+        border-bottom: 2px solid #757575;
+        box-shadow: 1px 11px 29px #A2A2A2;
+      }
+      .navigation {
+        text-align: right;
+        border-right: 1px solid #999;
+        background: #E8E8E8;
+        box-shadow: 3px 0 9px -3px #B9B9B9;
+      }
+      .navigation .holder {
+        padding: 5px 0 50px;
+      }
+      .navigation li {
+        line-height: 22px;
+      }
+      .output h4 {
+        margin-left: 15px;
+      }
     </style>
 </head>
 <body>
-    <div class="site-wrapper">
-
-      <div class="site-wrapper-inner">
-
-        <div class="cover-container">
-
-          <div class="inner cover">
-            <h1 class="cover-heading">Snap, <small>Oh Snap</small></h1>
-            <p class="lead">Initializing awesome!</p>
-            <p class="lead">
-              <a href="screenshots/" class="btn btn-lg btn-default">I CAN'T WAIT!</a>
-            </p>
-          </div>
-
-          <div class="mastfoot">
-            <div class="inner">
-              <p>GitHub Project: <a href="https://github.com/drpain/snap">https://github.com/drpain/snap</a>, by <a href="https://thatguy.co.za">@thatguy</a>.</p>
-            </div>
-          </div>
-
-        </div>
-
-      </div>
-
+  <div class="row heading">
+    <div class="container" ng-controller="TitleController">
+      <h1>snap <small ng-bind="title">(Loading)</small></h1>
     </div>
+  </div>
+  <div class="row content">
+    <div class="col-sm-3 col-md-2 navigation" ng-controller="NavigationController">
+      <h4>RUN TIMES</h4>
+      <div class="holder">
+        <ul ng-repeat="link in links">
+          <li>
+            <a href="{{link.href}}">
+              {{link.label}}
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="col-sm-9 col-md-10 output">
+      <h4>SCREENSIZES</h4>
+    </div>
+  </div>
 </body>
+<script type="text/javascript">
+  var app = angular.module("snap", []);
+
+  app.controller('NavigationController', function($scope, $http) {
+
+    // Get the JSON Configuration
+    $http.get('links.json')
+         .then(function(res){
+            $scope.links = res.data;
+         });
+    // $scope.links = {
+    //                 "1442619167": {
+    //                   "label": 1442619167,
+    //                   "href": "screenshots/1442619167"
+    //                 },
+    //                 "1442618313": {
+    //                   "label": 1442618313,
+    //                   "href": "screenshots/1442618313"
+    //                 },
+    //                 "1442618395": {
+    //                   "label": 1442618395,
+    //                   "href": "screenshots/1442618395"
+    //                 },
+    //                 "1442618455": {
+    //                   "label": 1442618455,
+    //                   "href": "screenshots/1442618455"
+    //                 },
+    //                 "1442618518": {
+    //                   "label": 1442618518,
+    //                   "href": "screenshots/1442618518"
+    //                 },
+    //                 "1442619076": {
+    //                   "label": 1442619076,
+    //                   "href": "screenshots/1442619076"
+    //                 },
+    //                 "1442619124": {
+    //                   "label": 1442619124,
+    //                   "href": "screenshots/1442619124"
+    //                 },
+    //                 "1442619137": {
+    //                   "label": 1442619137,
+    //                   "href": "screenshots/1442619137"
+    //                 },
+    //                 "1442619145": {
+    //                   "label": 1442619145,
+    //                   "href": "screenshots/1442619145"
+    //                 }
+    //               };
+  });
+
+  app.controller('TitleController', ['$scope', function($scope) {
+    $scope.title = "(Loaded)";
+  }]);
+
+</script>
 </html>
