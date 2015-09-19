@@ -113,7 +113,8 @@ def generateShot(url, width):
     namedUrl = url.replace("http://", "")
     namedUrl = namedUrl.replace("https://", "")
     namedUrl = namedUrl.replace("/", "--")
-    outputName = screenShotPath+"/"+str(startTime)+"/"+str(width)+"/"+namedUrl+".png"
+    outputUrl = str(startTime)+"/"+str(width)+"/"+namedUrl+".png"
+    outputName = screenShotPath+"/"+outputUrl
 
     # Optional cookie to be set
     cookies = json.dumps({
@@ -146,12 +147,12 @@ def generateShot(url, width):
         str(width): {
             'width': width,
             'height': height,
-            'src': outputName
+            'src': outputUrl
         }
     });
 
     # Fire and Forget
-    #subprocess.Popen(command)
+    subprocess.Popen(command)
 
     # Synchronous Command
     # try:

@@ -30,11 +30,17 @@
         text-decoration: none;
         text-shadow: 1px 1px #fff;
       }
-      ul, li {
+      li {
         padding: 0;
         margin: 0;
+        text-align: center;
         text-indent: 0px;
         list-style: none;
+      }
+      ul {
+        line-height: 20px;
+        margin: 0;
+        padding: 0;
       }
       * {
         box-sizing: border-box;
@@ -66,14 +72,28 @@
         margin: 0;
         padding: 0;
         border-top: 2px solid #828282;
-        border-bottom: 2px solid #757575;
+        border-bottom: 2px solid maroon;
         box-shadow: 1px 11px 29px #A2A2A2;
       }
       .navigation {
-        text-align: right;
-        border-right: 1px solid #999;
+        text-align: center;
         background: #E8E8E8;
         box-shadow: 3px 0 9px -3px #B9B9B9;
+        vertical-align: top;
+        width: 180px;
+        position: relative;
+        top: 15px;
+        -webkit-border-top-right-radius: 8px;
+        -webkit-border-bottom-right-radius: 8px;
+        -moz-border-radius-topright: 8px;
+        -moz-border-radius-bottomright: 8px;
+        border-top-right-radius: 8px;
+        border-bottom-right-radius: 8px;
+        border: 1px solid #999;
+      }
+      .navigation > div {
+        max-height: 400px;
+        overflow-y: auto;
       }
       .navigation .holder {
         padding: 5px 0 50px;
@@ -84,6 +104,36 @@
       .output h4 {
         margin-left: 15px;
       }
+      .content-column,
+      .navigation-column {
+        padding: 15px;
+        display: inline-block;
+        position: relative;
+      }
+      .navigation-column {
+        z-index: 2;
+        position: absolute;
+        top: 90px;
+      }
+      .content-column {
+        z-index: 1;
+        width: 100%;
+        padding-left: 260px;
+      }
+      .screenshot-container {
+        display: block;
+        float: left;
+      }
+      .screenshot {
+        margin-right: 20px;
+        margin-bottom: 40px;
+        border: 2px dashed #ccc;
+        overflow: hidden;
+        overflow-y: auto;
+      }
+      .screenshot img {
+        border: none;
+      }
     </style>
 </head>
 <body>
@@ -92,8 +142,8 @@
       <h1>snap <small ng-bind="title">(Loading)</small></h1>
     </div>
   </div>
-  <div class="row content">
-    <div class="col-sm-3 col-md-2 navigation" ng-controller="NavigationController">
+  <div class="row content" ng-controller="MainController">
+    <div class="navigation-column navigation">
       <h4>RUN TIMES</h4>
       <div class="holder">
         <ul ng-repeat="link in links">
@@ -105,61 +155,165 @@
         </ul>
       </div>
     </div>
-    <div class="col-sm-9 col-md-10 output">
+    <div class="content-column output">
       <h4>SCREENSIZES</h4>
+      <div class="holder" ng-repeat="screen in screenshots">
+        <div class="screenshot-container">
+          <strong>{{screen.site}} - ({{screen.width}} X {{screen.height}})</strong>
+          <div 
+            class="screenshot" 
+            style="width: {{screen.width}}px; height: {{screen.height}}px;"
+          >
+            <img 
+              ng-src="{{screen.src}}" 
+              alt="{{screen.width}}x{{screen.height}} Screenshot" 
+              width="{{screen.width}}" 
+            />
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </body>
 <script type="text/javascript">
   var app = angular.module("snap", []);
 
-  app.controller('NavigationController', function($scope, $http) {
+  // Responsible for handling the most of the page
+  // Links clicked, initial screenshot render, subsequent screenshot renders
+  app.controller('MainController', function($scope, $http) {
+
+    $scope.screenshots = [];
+    /*$scope.links = {
+                    "1442619167": {
+                      "label": 1442619167,
+                      "href": "screenshots/1442619167"
+                    },
+                    "1442618313": {
+                      "label": 1442618313,
+                      "href": "screenshots/1442618313"
+                    },
+                    "1442618395": {
+                      "label": 1442618395,
+                      "href": "screenshots/1442618395"
+                    },
+                    "1442618455": {
+                      "label": 1442618455,
+                      "href": "screenshots/1442618455"
+                    },
+                    "1442618518": {
+                      "label": 1442618518,
+                      "href": "screenshots/1442618518"
+                    },
+                    "1442619076": {
+                      "label": 1442619076,
+                      "href": "screenshots/1442619076"
+                    },
+                    "1442619124": {
+                      "label": 1442619124,
+                      "href": "screenshots/1442619124"
+                    },
+                    "1442619137": {
+                      "label": 1442619137,
+                      "href": "screenshots/1442619137"
+                    },
+                    "1442619145": {
+                      "label": 1442619145,
+                      "href": "screenshots/1442619145"
+                    }
+                  };*/
+
+
+      // Generically go get and update the screenshots
+      $scope.getScreenshots = function() {
+
+        console.log("GO GET THE DATA", $scope.currentPath);
+
+        // Set the new screenshots
+/*        var data = {
+                    "rendered": {
+                      "http://www.thechive.com": [
+                        {
+                          "320": {
+                            "height": 480, 
+                            "src": "screenshots/1442687708/320/www.thechive.com.png", 
+                            "width": 320
+                          }
+                        }, 
+                        {
+                          "480": {
+                            "height": 720, 
+                            "src": "screenshots/1442687708/480/www.thechive.com.png", 
+                            "width": 480
+                          }
+                        }, 
+                        {
+                          "768": {
+                            "height": 1152, 
+                            "src": "screenshots/1442687708/768/www.thechive.com.png", 
+                            "width": 768
+                          }
+                        }, 
+                        {
+                          "992": {
+                            "height": 793, 
+                            "src": "screenshots/1442687708/992/www.thechive.com.png", 
+                            "width": 992
+                          }
+                        }, 
+                        {
+                          "1200": {
+                            "height": 960, 
+                            "src": "screenshots/1442687708/1200/www.thechive.com.png", 
+                            "width": 1200
+                          }
+                        }
+                      ]
+                    }, 
+                    "startTime": 1442687708
+                  };
+*/
+        // Get it Booi!!
+        $http.get($scope.currentPath)
+         .then(function(res){
+            var data = res.data;
+
+            // Ensure that the data packet, contains the correct data
+            if (data.hasOwnProperty('rendered')) {
+              
+              var siteName = Object.keys(data.rendered)[0];
+              var entries = data.rendered[siteName];
+              var screenshots = [];
+              
+              for (var i = entries.length - 1; i >= 0; i--) {
+                var resolution = Object.keys(entries[i])[0];
+                var screenshotData = entries[i][resolution];
+                screenshotData['site'] = siteName;
+                screenshots.push(screenshotData);
+              }; 
+
+              $scope.screenshots = screenshots;
+            }
+         });
+      }
+
 
     // Get the JSON Configuration
     $http.get('links.json')
          .then(function(res){
             $scope.links = res.data;
-         });
-    // $scope.links = {
-    //                 "1442619167": {
-    //                   "label": 1442619167,
-    //                   "href": "screenshots/1442619167"
-    //                 },
-    //                 "1442618313": {
-    //                   "label": 1442618313,
-    //                   "href": "screenshots/1442618313"
-    //                 },
-    //                 "1442618395": {
-    //                   "label": 1442618395,
-    //                   "href": "screenshots/1442618395"
-    //                 },
-    //                 "1442618455": {
-    //                   "label": 1442618455,
-    //                   "href": "screenshots/1442618455"
-    //                 },
-    //                 "1442618518": {
-    //                   "label": 1442618518,
-    //                   "href": "screenshots/1442618518"
-    //                 },
-    //                 "1442619076": {
-    //                   "label": 1442619076,
-    //                   "href": "screenshots/1442619076"
-    //                 },
-    //                 "1442619124": {
-    //                   "label": 1442619124,
-    //                   "href": "screenshots/1442619124"
-    //                 },
-    //                 "1442619137": {
-    //                   "label": 1442619137,
-    //                   "href": "screenshots/1442619137"
-    //                 },
-    //                 "1442619145": {
-    //                   "label": 1442619145,
-    //                   "href": "screenshots/1442619145"
-    //                 }
-    //               };
+            // Initialize the screenshots from the last link in the list.
+            // This would be the latest one
+            var links = Object.keys($scope.links);
+            var lastLink = links.slice(-1)[0];
+            $scope.currentPath = lastLink + "/config.json";
+            $scope.getScreenshots();
+    });
   });
 
+
+
+  // Indicate that the page is loaded and Angular working as expected.
+  // At least thus far
   app.controller('TitleController', ['$scope', function($scope) {
     $scope.title = "(Loaded)";
   }]);
