@@ -160,14 +160,14 @@
       <div class="holder" ng-repeat="screen in screenshots">
         <div class="screenshot-container">
           <strong>{{screen.site}} - ({{screen.width}} X {{screen.height}})</strong>
-          <div 
-            class="screenshot" 
+          <div
+            class="screenshot"
             style="width: {{screen.width}}px; height: {{screen.height}}px;"
           >
-            <img 
-              ng-src="{{screen.src}}" 
-              alt="{{screen.width}}x{{screen.height}} Screenshot" 
-              width="{{screen.width}}" 
+            <img
+              ng-src="{{screen.src}}"
+              alt="{{screen.width}}x{{screen.height}} Screenshot"
+              width="{{screen.width}}"
             />
           </div>
         </div>
@@ -234,41 +234,41 @@
                       "http://www.thechive.com": [
                         {
                           "320": {
-                            "height": 480, 
-                            "src": "screenshots/1442687708/320/www.thechive.com.png", 
+                            "height": 480,
+                            "src": "screenshots/1442687708/320/www.thechive.com.png",
                             "width": 320
                           }
-                        }, 
+                        },
                         {
                           "480": {
-                            "height": 720, 
-                            "src": "screenshots/1442687708/480/www.thechive.com.png", 
+                            "height": 720,
+                            "src": "screenshots/1442687708/480/www.thechive.com.png",
                             "width": 480
                           }
-                        }, 
+                        },
                         {
                           "768": {
-                            "height": 1152, 
-                            "src": "screenshots/1442687708/768/www.thechive.com.png", 
+                            "height": 1152,
+                            "src": "screenshots/1442687708/768/www.thechive.com.png",
                             "width": 768
                           }
-                        }, 
+                        },
                         {
                           "992": {
-                            "height": 793, 
-                            "src": "screenshots/1442687708/992/www.thechive.com.png", 
+                            "height": 793,
+                            "src": "screenshots/1442687708/992/www.thechive.com.png",
                             "width": 992
                           }
-                        }, 
+                        },
                         {
                           "1200": {
-                            "height": 960, 
-                            "src": "screenshots/1442687708/1200/www.thechive.com.png", 
+                            "height": 960,
+                            "src": "screenshots/1442687708/1200/www.thechive.com.png",
                             "width": 1200
                           }
                         }
                       ]
-                    }, 
+                    },
                     "startTime": 1442687708
                   };
 */
@@ -279,17 +279,17 @@
 
             // Ensure that the data packet, contains the correct data
             if (data.hasOwnProperty('rendered')) {
-              
+
               var siteName = Object.keys(data.rendered)[0];
               var entries = data.rendered[siteName];
               var screenshots = [];
-              
+
               for (var i = entries.length - 1; i >= 0; i--) {
                 var resolution = Object.keys(entries[i])[0];
                 var screenshotData = entries[i][resolution];
                 screenshotData['site'] = siteName;
                 screenshots.push(screenshotData);
-              }; 
+              };
 
               $scope.screenshots = screenshots;
             }
