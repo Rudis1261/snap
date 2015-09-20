@@ -54,7 +54,7 @@
         font-size: 16px;
       }
       small {
-        color: #ccc!important;
+        color: #ddd!important;
         font-size: 0.4em!important;
       }
       html,
@@ -63,10 +63,10 @@
       }
       .heading {
         color: #fff;
-        padding:0;
+        padding: 10px 0 0 15px;
         margin: 0;
         display: block;
-        text-align: center;
+        text-align: left;
         text-shadow: 0 1px 3px rgba(0,0,0,.5);
         -webkit-box-shadow: inset 0 0 50px rgba(0,0,0,.3);
         box-shadow: inset 0 0 50px rgba(0,0,0,.3);
@@ -86,9 +86,9 @@
       .navigation {
         text-align: center;
         background: #E8E8E8;
-        box-shadow: 3px 0 9px -3px #B9B9B9;
+        box-shadow: 3px 3px 9px -3px #B9B9B9;
         vertical-align: top;
-        width: 180px;
+        width: 160px;
         position: relative;
         top: 15px;
         -webkit-border-top-right-radius: 8px;
@@ -98,6 +98,7 @@
         border-top-right-radius: 8px;
         border-bottom-right-radius: 8px;
         border: 1px solid #999;
+        border-left: 0;
       }
       .navigation > div {
         max-height: 400px;
@@ -126,7 +127,7 @@
       .content-column {
         z-index: 1;
         width: 100%;
-        padding-left: 260px;
+        padding-left: 210px;
       }
       .screenshot-container {
         display: block;
@@ -140,7 +141,7 @@
       }
       .screenshot {
         text-align: left;
-        margin-right: 20px;
+        margin-right: 15px;
         margin-bottom: 40px;
         border: 2px dashed #333;
         overflow: hidden;
@@ -157,7 +158,7 @@
 </head>
 <body>
   <div class="row heading">
-    <div class="container" ng-controller="TitleController">
+    <div ng-controller="TitleController">
       <h1>snap <small ng-bind="title">(Loading)</small></h1>
     </div>
   </div>
@@ -182,7 +183,7 @@
           <div class="screenshot-container" ng-repeat="(key, data) in breakPoint">
             <strong>{{data.width}}px Break Point </strong>
             <span class="grey">({{data.width}} X {{data.height}})</span>
-            <div class="screenshot" style="width: {{data.width+4}}px; height: {{data.height+4}}px;" >
+            <div class="screenshot" style="width: {{data.width+19}}px; height: {{data.height}}px;" >
               <img ng-src="{{data.src}}" alt="{{data.width}}x{{data.height}} Screenshot" width="{{data.width}}" />
             </div>
           </div>
