@@ -18,6 +18,13 @@
         integrity="sha256-MfvZlkHCEqatNoGiOXveE8FIwMzZg4W85qfrfIFBfYc= sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ=="
         crossorigin="anonymous">
     <style type="text/css">
+      h1 {
+        margin-top: 30px;
+        margin-bottom: 20px;
+      }
+      h1:first-of-type {
+        margin-top: 0;
+      }
       h4 {
         color: #9C9C9C;
         text-shadow: 1px 1px #fff;
@@ -68,9 +75,10 @@
         background: #fff;
         width: 100%;
         display: block;
-        min-height: 100%;
+        min-height: 400px;
         margin: 0;
         padding: 0;
+        margin-bottom: 100px;
         border-top: 2px solid #828282;
         border-bottom: 2px solid maroon;
         box-shadow: 1px 11px 29px #A2A2A2;
@@ -124,15 +132,26 @@
         display: block;
         float: left;
       }
+      .content-column .holder {
+        border-bottom: 1px solid #ccc;
+
+      }.content-column .holder:last-of-type {
+        border: none;
+      }
       .screenshot {
+        text-align: left;
         margin-right: 20px;
         margin-bottom: 40px;
-        border: 2px dashed #ccc;
+        border: 2px dashed #333;
         overflow: hidden;
         overflow-y: auto;
+        box-shadow: 1px 1px 10px #4E4E4E inset;
       }
       .screenshot img {
         border: none;
+      }
+      .grey {
+        #777;
       }
     </style>
 </head>
@@ -148,7 +167,7 @@
       <div class="holder">
         <ul ng-repeat="link in links">
           <li>
-            <a href="{{link.href}}">
+            <a ng-click="loadScreenShots(link.label)" href="#{{link.href}}">
               {{link.label}}
             </a>
           </li>
@@ -157,24 +176,22 @@
     </div>
     <div class="content-column output">
       <h4>SCREENSIZES</h4>
-      <div class="holder" ng-repeat="screen in screenshots">
-        <div class="screenshot-container">
-          <strong>{{screen.site}} - ({{screen.width}} X {{screen.height}})</strong>
-          <div
-            class="screenshot"
-            style="width: {{screen.width}}px; height: {{screen.height}}px;"
-          >
-            <img
-              ng-src="{{screen.src}}"
-              alt="{{screen.width}}x{{screen.height}} Screenshot"
-              width="{{screen.width}}"
-            />
+      <div class="holder row" ng-repeat="(siteName, breakPoints) in screenshots">
+        <h1>{{siteName}}</h1>
+        <div ng-repeat="breakPoint in breakPoints">
+          <div class="screenshot-container" ng-repeat="(key, data) in breakPoint">
+            <strong>{{data.width}}px Break Point </strong>
+            <span class="grey">({{data.width}} X {{data.height}})</span>
+            <div class="screenshot" style="width: {{data.width+4}}px; height: {{data.height+4}}px;" >
+              <img ng-src="{{data.src}}" alt="{{data.width}}x{{data.height}} Screenshot" width="{{data.width}}" />
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
 </body>
+
 <script type="text/javascript">
   var app = angular.module("snap", []);
 
@@ -182,120 +199,26 @@
   // Links clicked, initial screenshot render, subsequent screenshot renders
   app.controller('MainController', function($scope, $http) {
 
+    // Placeholer
     $scope.screenshots = [];
-    /*$scope.links = {
-                    "1442619167": {
-                      "label": 1442619167,
-                      "href": "screenshots/1442619167"
-                    },
-                    "1442618313": {
-                      "label": 1442618313,
-                      "href": "screenshots/1442618313"
-                    },
-                    "1442618395": {
-                      "label": 1442618395,
-                      "href": "screenshots/1442618395"
-                    },
-                    "1442618455": {
-                      "label": 1442618455,
-                      "href": "screenshots/1442618455"
-                    },
-                    "1442618518": {
-                      "label": 1442618518,
-                      "href": "screenshots/1442618518"
-                    },
-                    "1442619076": {
-                      "label": 1442619076,
-                      "href": "screenshots/1442619076"
-                    },
-                    "1442619124": {
-                      "label": 1442619124,
-                      "href": "screenshots/1442619124"
-                    },
-                    "1442619137": {
-                      "label": 1442619137,
-                      "href": "screenshots/1442619137"
-                    },
-                    "1442619145": {
-                      "label": 1442619145,
-                      "href": "screenshots/1442619145"
-                    }
-                  };*/
 
+    // Generically build configuration
+    $scope.appendConfig = function($path) {
+      return $path + "/config.json";
+    };
 
-      // Generically go get and update the screenshots
-      $scope.getScreenshots = function() {
+    // Generically go get and update the screenshots
+    $scope.getScreenshots = function() {
 
-        console.log("GO GET THE DATA", $scope.currentPath);
+      // Reset the screenshots should someone view another run
+      $scope.screenshots = [];
 
-        // Set the new screenshots
-/*        var data = {
-                    "rendered": {
-                      "http://www.thechive.com": [
-                        {
-                          "320": {
-                            "height": 480,
-                            "src": "screenshots/1442687708/320/www.thechive.com.png",
-                            "width": 320
-                          }
-                        },
-                        {
-                          "480": {
-                            "height": 720,
-                            "src": "screenshots/1442687708/480/www.thechive.com.png",
-                            "width": 480
-                          }
-                        },
-                        {
-                          "768": {
-                            "height": 1152,
-                            "src": "screenshots/1442687708/768/www.thechive.com.png",
-                            "width": 768
-                          }
-                        },
-                        {
-                          "992": {
-                            "height": 793,
-                            "src": "screenshots/1442687708/992/www.thechive.com.png",
-                            "width": 992
-                          }
-                        },
-                        {
-                          "1200": {
-                            "height": 960,
-                            "src": "screenshots/1442687708/1200/www.thechive.com.png",
-                            "width": 1200
-                          }
-                        }
-                      ]
-                    },
-                    "startTime": 1442687708
-                  };
-*/
-        // Get it Booi!!
-        $http.get($scope.currentPath)
-         .then(function(res){
-            var data = res.data;
-
-            // Ensure that the data packet, contains the correct data
-            if (data.hasOwnProperty('rendered')) {
-
-              var siteName = Object.keys(data.rendered)[0];
-              var entries = data.rendered[siteName];
-              var screenshots = [];
-
-              for (var i = entries.length - 1; i >= 0; i--) {
-                var resolution = Object.keys(entries[i])[0];
-                var screenshotData = entries[i][resolution];
-                screenshotData['site'] = siteName;
-                screenshots.push(screenshotData);
-              };
-
-              $scope.screenshots = screenshots;
-            }
-         });
-      }
-
+      // Get it Booi!!
+      $http.get($scope.currentPath)
+       .then(function(res){
+          $scope.screenshots = res.data.rendered;
+       });
+    }
 
     // Get the JSON Configuration
     $http.get('links.json')
@@ -305,11 +228,17 @@
             // This would be the latest one
             var links = Object.keys($scope.links);
             var lastLink = links.slice(-1)[0];
-            $scope.currentPath = lastLink + "/config.json";
+            $scope.currentPath = $scope.appendConfig(lastLink);
             $scope.getScreenshots();
     });
-  });
 
+    // We want to be able to switch between runs easily
+    $scope.loadScreenShots = function($link) {
+      $scope.currentPath = $scope.appendConfig($link);
+      $scope.getScreenshots();
+    };
+
+  });
 
 
   // Indicate that the page is loaded and Angular working as expected.
